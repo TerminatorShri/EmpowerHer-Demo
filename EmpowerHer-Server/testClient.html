@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Socket.IO Web Client</title>
+</head>
+<body>
+  <h2>Web Portal</h2>
+  <div id="notification"></div>
+
+  <button onclick="sendMessage('Message 1')">Send Message 1</button>
+  <button onclick="sendMessage('Message 2')">Send Message 2</button>
+  <button onclick="sendMessage('Message 3')">Send Message 3</button>
+  <button onclick="sendMessage('Message 4')">Send Message 4</button>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:3001");
+
+    // Listen for notifications from the server
+    socket.on("showNotification", (data) => {
+      document.getElementById("notification").innerText = "Received Document ID: " + data.documentId;
+    });
+
+    // Function to send a message to the app
+    function sendMessage(message) {
+      socket.emit("sendMessageToApp", { message });
+    }
+  </script>
+</body>
+</html>
